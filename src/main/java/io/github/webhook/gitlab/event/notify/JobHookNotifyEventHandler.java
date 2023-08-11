@@ -30,7 +30,7 @@ public class JobHookNotifyEventHandler extends GitlabNotifyEventHandler<JobHook>
         String project = String.format("[[%s]](%s)", repository.getName(), repository.getHomepage());
         String pipeline = String.format("pipeline[#%s](%s/-/pipelines/%s)", pipelineId, repository.getHomepage(), pipelineId);
         String costTime = String.format("%.0f", jobHook.getBuildDuration());
-        if (costTime.equals("")) {
+        if (costTime.isEmpty()) {
             costTime = "0";
         }
         String emoji = "";
@@ -51,7 +51,7 @@ public class JobHookNotifyEventHandler extends GitlabNotifyEventHandler<JobHook>
         String build = String.format("<font color='%s'> [%s](%s/-/jobs/%s) %s%s</font>",
                 color, jobHook.getBuildStage(), repository.getHomepage(),
                 jobHook.getBuildId(), buildStatus, emoji);
-        message.setMessage(String.format("<font color='#000000'>%s %s %s %s%ss</font>", project, pipeline, build, "\uD83D\uDD57", costTime));
+        message.setMessage(String.format("<font color='#000000'>%s %s %s %s%ss %n%n %s </font>", project, pipeline, build, "\uD83D\uDD57", costTime, jobHook.getUser().getName()));
         return message;
     }
 
