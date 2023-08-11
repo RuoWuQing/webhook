@@ -85,8 +85,8 @@ public class PipelineHookNotifyEventHandler extends GitlabNotifyEventHandler<Pip
                 String costTime = String.format("%.0f", build.getDuration());
                 if (costTime.equals("")) {
                     if (build.getFinishedAt() != null && build.getStartedAt() != null) {
-                        Date finishedAt = Date.from(LocalDateTime.parse(build.getFinishedAt().substring(0, 19), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")).atZone(ZoneId.systemDefault()).toInstant());
-                        Date start = Date.from(LocalDateTime.parse(build.getStartedAt().substring(0, 19), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")).atZone(ZoneId.systemDefault()).toInstant());
+                        Date finishedAt = Date.from(LocalDateTime.parse(build.getFinishedAt().substring(0, 19).replace('T', ' '), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")).atZone(ZoneId.systemDefault()).toInstant());
+                        Date start = Date.from(LocalDateTime.parse(build.getStartedAt().substring(0, 19).replace('T', ' '), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")).atZone(ZoneId.systemDefault()).toInstant());
                         costTime = String.valueOf((finishedAt.getTime() - start.getTime()) / 1000);
                     } else {
                         costTime = "0";
